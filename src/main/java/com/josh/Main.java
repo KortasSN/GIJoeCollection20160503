@@ -20,11 +20,13 @@ public class Main {
             Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/GIJoeDB", "root", "itecitec");
             Statement statement;
             statement = conn.createStatement();
+            String deleteSqlInfo = "DROP TABLE GIJoeDB";
 
+            statement.execute(deleteSqlInfo);
             String createTableSQL = "CREATE TABLE GIJoeDB " + "(Year varchar(4), "+" Name varchar(25),"+" Acc1 varchar(30),"+" Acc2 varchar(30)" +
                     ", Acc3 varchar(30),"+" Acc4 varchar(30),"+" Acc5 varchar(30),"+" Acc6 varchar(30),"+" Acc7 varchar(30),"+" Acc8 varchar(30)" +
                     ", Acc9 varchar(30),"+" Acc10 varchar(30))";
-            System.out.println(createTableSQL);
+            //PRINTING OUT DATABASE          System.out.println(createTableSQL);
             statement.execute(createTableSQL);
             PreparedStatement importDB = null;
             FileInputStream readStream = new FileInputStream("FiguresFinalProject.xls");
