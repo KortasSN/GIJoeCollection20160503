@@ -17,12 +17,14 @@ public class Main {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/GIJoeDB", "root", "CobraCommandCenter668");
+            Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/GIJoeDB", "root", "itecitec");
             Statement statement;
             statement = conn.createStatement();
-            String createTableSQL = "CREATE TABLE GIJoeDB (Year varchar(4), Name varchar(25), Acc1 varchar(30), Acc2 varchar(30)" +
-                    ", Acc3 varchar(30), Acc4 varchar(30), Acc5 varchar(30), Acc6 varchar(30), Acc7 varchar(30), Acc8 varchar(30)" +
-                    ", Acc9 varchar(30), Acc10 varchar(30)";
+
+            String createTableSQL = "CREATE TABLE GIJoeDB " + "(Year varchar(4), "+" Name varchar(25),"+" Acc1 varchar(30),"+" Acc2 varchar(30)" +
+                    ", Acc3 varchar(30),"+" Acc4 varchar(30),"+" Acc5 varchar(30),"+" Acc6 varchar(30),"+" Acc7 varchar(30),"+" Acc8 varchar(30)" +
+                    ", Acc9 varchar(30),"+" Acc10 varchar(30))";
+            System.out.println(createTableSQL);
             statement.execute(createTableSQL);
             PreparedStatement importDB = null;
             FileInputStream readStream = new FileInputStream("FiguresFinalProject.xls");
@@ -64,11 +66,16 @@ public class Main {
                 Cell acc10 = sheet.getRow(r).getCell(c + 11, Row.RETURN_BLANK_AS_NULL);
                 System.out.println(acc10 + "acc10");
 
+                String sqlInput2ndAttempt = "INSERT INTO GIJoeDB VALUES (year, name, acc1, acc2, acc3, acc4, acc5, acc6, acc7, acc8, acc9, acc10)";
 
-                String sqlInput = "INSERT INTO GIJoeDB VALUES('" + year + "', '" + name + "', '" + acc1 + "','" + acc2 + "','" + acc3 + "','"
-                        + acc4 + "','" + acc5 + "','" + acc6 + "','" + acc7 + "','" + acc8 + "','" + acc9 + "','" + acc10 + "')";
+//  WAS USING                String sqlInput = "INSERT INTO GIJoeDB VALUES('" + year + "', " + name + ", " + acc1 + "," + acc2 + "," + acc3 + ","
+//                        + acc4 + "," + acc5 + "," + acc6 + "," + acc7 + "," + acc8 + "," + acc9 + "," + acc10 + ", )";
 
-                importDB = (PreparedStatement) conn.prepareStatement(sqlInput);
+
+//    NOT USING            String sqlInput = "INSERT INTO GIJoeDB VALUES('" + year + "', '" + name + "', '" + acc1 + "','" + acc2 + "','" + acc3 + "','"
+//                        + acc4 + "','" + acc5 + "','" + acc6 + "','" + acc7 + "','" + acc8 + "','" + acc9 + "','" + acc10 + "')";
+
+                importDB = (PreparedStatement) conn.prepareStatement(sqlInput2ndAttempt);
                 importDB.execute();
             }
 
