@@ -3,6 +3,7 @@ package com.josh;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /**
  * Created by kortasthekiller on 4/22/16.
@@ -24,8 +25,10 @@ public class GIJoeCollectionGUI extends JFrame {
     private JCheckBox acc8CheckBox;
     private JCheckBox acc9CheckBox;
     private JCheckBox acc10CheckBox;
+    private Main mainDatabase;
 
-    protected GIJoeCollectionGUI() {
+    protected GIJoeCollectionGUI(Main database) {
+        this.mainDatabase = database;  //todo maybe rename things
         this.setContentPane(rootPanel);
         configureYear();
         configureButton();
@@ -64,7 +67,7 @@ public class GIJoeCollectionGUI extends JFrame {
                 for (int x = 1982; x <= 1994; x++) {
                     yearComboBox.addItem(x);
                     String yearSelected = (String) yearComboBox.getSelectedItem();
-
+                    ArrayList names = mainDatabase.requestNamesForYear(yearSelected);
                 }
             }
             });

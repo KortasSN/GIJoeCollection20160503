@@ -9,11 +9,16 @@ import org.apache.poi.ss.usermodel.Row;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
+        Main main = new Main();
+        main.go();
+    }
 
+    public void go(){
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -88,9 +93,15 @@ public class Main {
         }
 
 
-        GIJoeCollectionGUI gui = new GIJoeCollectionGUI();
+        GIJoeCollectionGUI gui = new GIJoeCollectionGUI(this);
 
 
+    }
+
+    public ArrayList requestNamesForYear(String year) {
+
+        //todo database - make query, send results back
+        return null; //todo
     }
 }
 
