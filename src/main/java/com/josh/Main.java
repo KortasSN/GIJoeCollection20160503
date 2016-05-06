@@ -22,19 +22,26 @@ public class Main {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/GIJoeDB", "root", "itecitec");
+            Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/GIJoeDB", "root", "CobraCommandCenter668");
             Statement statement;
             statement = conn.createStatement();
             String deleteSqlInfo = "DROP TABLE GIJoeDB";
 
-            statement.execute(deleteSqlInfo);
+            //statement.execute(deleteSqlInfo);
             String createTableSQL = "CREATE TABLE GIJoeDB " + "(Year varchar(4), "+" Name varchar(25),"+" Acc1 varchar(30),"+" Acc2 varchar(30)" +
                     ", Acc3 varchar(30),"+" Acc4 varchar(30),"+" Acc5 varchar(30),"+" Acc6 varchar(30),"+" Acc7 varchar(30),"+" Acc8 varchar(30)" +
                     ", Acc9 varchar(30),"+" Acc10 varchar(30))";
-            //PRINTING OUT DATABASE          System.out.println(createTableSQL);
+            //PRINTING OUT DATABASE   //
+                  System.out.println(createTableSQL);
             statement.execute(createTableSQL);
             PreparedStatement importDB = null;
-            FileInputStream readStream = new FileInputStream("FiguresFinalProject.xls");
+            FileInputStream readStream = null;
+            try {
+                readStream = new FileInputStream("FiguresFinalProject.xls");
+            } catch (java.lang.Exception exception) {
+                System.out.println("File Not Found");
+                exception.printStackTrace();
+            }
             HSSFWorkbook workbook = new HSSFWorkbook(readStream);
 
             System.out.println(workbook.getNumberOfSheets());
@@ -90,6 +97,8 @@ public class Main {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
 
@@ -99,7 +108,7 @@ public class Main {
     }
 
     public ArrayList requestNamesForYear(String year) {
-
+        System.out.println("going to make ArrayList");
         //todo database - make query, send results back
         return null; //todo
     }
