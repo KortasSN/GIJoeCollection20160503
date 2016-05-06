@@ -56,7 +56,15 @@ public class GIJoeCollectionGUI extends JFrame {
 
         }
 
-    }
+  }
+        //todo put name in after retrieving from database//
+    private void configureNames(ArrayList namesFromYear) {
+           for (int y = 0; y < namesFromYear.size(); y++) {
+               nameComboBox.addItem(y);
+           }
+        }
+
+
 
     public void buttonConfig() {
 
@@ -66,16 +74,23 @@ public class GIJoeCollectionGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 for (int x = 1982; x <= 1994; x++) {
                     yearComboBox.addItem(x);
-                    String yearSelected = (String) yearComboBox.getSelectedItem();
+                    String yearSelected = String.valueOf(yearComboBox.getSelectedItem());
                     ArrayList names = mainDatabase.requestNamesForYear(yearSelected);
+                    configureNames(names);
+
                 }
-            }
+
+
+                //sent to configure names for names combobox
+
+                            }
             });
 
 
         //NAME submit button//
         nameSubmitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            String nameChosen = (String)nameComboBox.getSelectedItem();
 
             }
         });

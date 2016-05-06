@@ -18,7 +18,7 @@ public class Main {
         main.go();
     }
 
-    public void go(){
+    public void go() {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -27,7 +27,7 @@ public class Main {
             statement = conn.createStatement();
             String deleteSqlInfo = "DROP TABLE GIJoeDB";
 
-            //statement.execute(deleteSqlInfo);
+            statement.execute(deleteSqlInfo);
             String createTableSQL = "CREATE TABLE GIJoeDB " + "(Year varchar(4), "+" Name varchar(25),"+" Acc1 varchar(30),"+" Acc2 varchar(30)" +
                     ", Acc3 varchar(30),"+" Acc4 varchar(30),"+" Acc5 varchar(30),"+" Acc6 varchar(30),"+" Acc7 varchar(30),"+" Acc8 varchar(30)" +
                     ", Acc9 varchar(30),"+" Acc10 varchar(30))";
@@ -56,11 +56,11 @@ public class Main {
                 //  for (int c = 0; c < row.getLastCellNum(); c++) {
                 System.out.println(row.getLastCellNum());    //output last cell number
                 Cell year = sheet.getRow(r).getCell(c, Row.RETURN_BLANK_AS_NULL);
-                System.out.println(year + "year");
+                System.out.println(year);
                 Cell name = sheet.getRow(r).getCell(c + 1, Row.RETURN_BLANK_AS_NULL);
-                System.out.println(name + "name");
+                System.out.println(name);
                 Cell acc1 = sheet.getRow(r).getCell(c + 2, Row.RETURN_BLANK_AS_NULL);
-                System.out.println(acc1 + "acc1");
+                System.out.println(acc1);
                 Cell acc2 = sheet.getRow(r).getCell(c + 3, Row.RETURN_BLANK_AS_NULL);
                 System.out.println(acc2);
                 Cell acc3 = sheet.getRow(r).getCell(c + 4, Row.RETURN_BLANK_AS_NULL);
@@ -107,10 +107,20 @@ public class Main {
 
     }
 
-    public ArrayList requestNamesForYear(String year) {
+    public ArrayList requestNamesForYear(String year)  {
         System.out.println("going to make ArrayList");
+
+        String sQLGetNamesByYear = "SELECT name FROM GIJoeDB WHERE year = '"+year+"'";
+        //need an execute statement to actually get data from GIJoeDB//
+        requestNamesForYear(sQLGetNamesByYear);   //puts into arraylist
+        System.out.println(requestNamesForYear(sQLGetNamesByYear));  //output for testing
+
+        //sQLGetNamesByYear.
+        //todo take arraylist and enter into
+
+
         //todo database - make query, send results back
-        return null; //todo
+        return requestNamesForYear(sQLGetNamesByYear); //todo
     }
 }
 
