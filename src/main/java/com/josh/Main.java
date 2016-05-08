@@ -78,7 +78,7 @@ public class Main {
                 Cell acc9 = sheet.getRow(r).getCell(c + 10, Row.RETURN_BLANK_AS_NULL);
                 System.out.println(acc9);
                 Cell acc10 = sheet.getRow(r).getCell(c + 11, Row.RETURN_BLANK_AS_NULL);
-                System.out.println(acc10 + "acc10");
+                System.out.println(acc10);
 
                 String sqlInput2ndAttempt = "INSERT INTO GIJoeDB VALUES (year, name, acc1, acc2, acc3, acc4, acc5, acc6, acc7, acc8, acc9, acc10)";
 
@@ -107,12 +107,28 @@ public class Main {
 
     }
 
-    public ArrayList requestNamesForYear(String year)  {
+    public ArrayList requestNamesForYear(String year) throws SQLException {
         System.out.println("going to make ArrayList");
 
         String sQLGetNamesByYear = "SELECT name FROM GIJoeDB WHERE year = '"+year+"'";
+        //System.out.println(sQLGetNamesByYear);
+        //PreparedStatement preparedStatement = Connection.class.sQLGetNamesByYear);
+        String sql = "select * from gijoedb";
+        Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/GIJoeDB", "root", "CobraCommandCenter668");
+        Statement statement = conn.createStatement();
+        ResultSet result = statement.executeQuery(sql);
+        System.out.println(result);
+
+
+//        Statement stmt = connection.createStatement();
+//        ResultSet resultSet = statement.executeQuery("SELECT name FROM GIJoeDB Where year = '"+year+"'");
+//
+
+
+
         //need an execute statement to actually get data from GIJoeDB//
-        requestNamesForYear(sQLGetNamesByYear);   //puts into arraylist
+
+                requestNamesForYear(sQLGetNamesByYear);   //puts into arraylist
         System.out.println(requestNamesForYear(sQLGetNamesByYear));  //output for testing
 
         //sQLGetNamesByYear.

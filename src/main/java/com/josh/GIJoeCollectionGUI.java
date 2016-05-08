@@ -3,6 +3,7 @@ package com.josh;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -75,7 +76,12 @@ public class GIJoeCollectionGUI extends JFrame {
                 for (int x = 1982; x <= 1994; x++) {
                     yearComboBox.addItem(x);
                     String yearSelected = String.valueOf(yearComboBox.getSelectedItem());
-                    ArrayList names = mainDatabase.requestNamesForYear(yearSelected);
+                    ArrayList names = null;
+                    try {
+                        names = mainDatabase.requestNamesForYear(yearSelected);
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    }
                     configureNames(names);
 
                 }
