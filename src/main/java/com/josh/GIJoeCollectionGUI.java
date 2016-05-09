@@ -53,7 +53,7 @@ public class GIJoeCollectionGUI extends JFrame {
 
     private void configureYear() {
         for (int x = 1982 ; x <=1994 ; x++) {
-            yearComboBox.addItem(x);
+            yearComboBox.addItem(x + "");   //hack to convert the number to a String
 
         }
 
