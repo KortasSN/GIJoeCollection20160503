@@ -13,6 +13,9 @@ import java.util.ArrayList;
 
 public class Main {
 
+    private Connection conn;
+    private Statement setUpTableStatement;
+
     public static void main(String[] args) throws IOException {
         Main main = new Main();
         main.go();
@@ -22,18 +25,18 @@ public class Main {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/GIJoeDB", "root", "CobraCommandCenter668");
-            Statement statement;
-            statement = conn.createStatement();
-            String deleteSqlInfo = "DROP TABLE GIJoeDB";
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/GIJoeDB", "root", "CobraCommandCenter668");
 
-            statement.execute(deleteSqlInfo);
+            setUpTableStatement = conn.createStatement();
+            String deleteSqlInfo = "DROP TABLE if EXISTS GIJoeDB";
+
+            setUpTableStatement.execute(deleteSqlInfo);
             String createTableSQL = "CREATE TABLE GIJoeDB " + "(Year varchar(4), "+" Name varchar(25),"+" Acc1 varchar(30),"+" Acc2 varchar(30)" +
                     ", Acc3 varchar(30),"+" Acc4 varchar(30),"+" Acc5 varchar(30),"+" Acc6 varchar(30),"+" Acc7 varchar(30),"+" Acc8 varchar(30)" +
                     ", Acc9 varchar(30),"+" Acc10 varchar(30))";
             //PRINTING OUT DATABASE   //
                   System.out.println(createTableSQL);
-            statement.execute(createTableSQL);
+            setUpTableStatement.execute(createTableSQL);
             PreparedStatement importDB = null;
             FileInputStream readStream = null;
             try {
@@ -89,7 +92,7 @@ public class Main {
 //    NOT USING            String sqlInput = "INSERT INTO GIJoeDB VALUES('" + year + "', '" + name + "', '" + acc1 + "','" + acc2 + "','" + acc3 + "','"
 //                        + acc4 + "','" + acc5 + "','" + acc6 + "','" + acc7 + "','" + acc8 + "','" + acc9 + "','" + acc10 + "')";
 
-                importDB = (PreparedStatement) conn.prepareStatement(sqlInput2ndAttempt);
+                importDB = conn.prepareStatement(sqlInput2ndAttempt);
                 importDB.execute();
             }
 
@@ -107,16 +110,18 @@ public class Main {
 
     }
 
-    public ArrayList requestNamesForYear(String year) throws SQLException {
+    public ArrayList<String> requestNamesForYear(String year) throws SQLException {
         System.out.println("going to make ArrayList");
 
-        String sQLGetNamesByYear = "SELECT name FROM GIJoeDB WHERE year = '"+year+"'";
+        String sQLGetNamesByYear = "SELECT name FROM GIJoeDB WHERE year = ?";
         //System.out.println(sQLGetNamesByYear);
         //PreparedStatement preparedStatement = Connection.class.sQLGetNamesByYear);
         String sql = "select * from gijoedb";
-        Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/GIJoeDB", "root", "CobraCommandCenter668");
-        Statement statement = conn.createStatement();
-        ResultSet result = statement.executeQuery(sql);
+        //Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/GIJoeDB", "root", "CobraCommandCenter668");
+
+        PreparedStatement statementNames = conn.prepareStatement(sQLGetNamesByYear);
+        statementNames.setString(1, year);
+        ResultSet result = statementNames.executeQuery(sql);
         System.out.println(result);
 
 
@@ -128,16 +133,39 @@ public class Main {
 
         //need an execute statement to actually get data from GIJoeDB//
 
-                requestNamesForYear(sQLGetNamesByYear);   //puts into arraylist
-        System.out.println(requestNamesForYear(sQLGetNamesByYear));  //output for testing
+        //        requestNamesForYear(sQLGetNamesByYear);   //puts into arraylist
+        //System.out.println(requestNamesForYear(sQLGetNamesByYear));  //output for testing
 
         //sQLGetNamesByYear.
         //todo take arraylist and enter into
 
 
         //todo database - make query, send results back
-        return requestNamesForYear(sQLGetNamesByYear); //todo
+        //return requestNamesForYear(sQLGetNamesByYear); //todo This is causing your endless loop - keep calling this method again?
+
+        ArrayList<String> names = new ArrayList<>();
+
+
+        while (result.next()) {
+            String name = result.getString("name");
+            names.add(name);
+            System.out.println("Added this name: " + name);
+        }
+
+        return names;
     }
+
+    public void shutdown() {
+        //todo close connection, statements.
+        // Add individual try-catch blocks and check to make sure these things are not null before calling close
+      try {
+          setUpTableStatement.close();
+          conn.close();
+      }catch (SQLException sqle) {
+          sqle.printStackTrace();
+      }
+    }
+
 }
 
 
