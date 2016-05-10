@@ -47,6 +47,7 @@ public class GIJoeCollectionGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String year = (String)yearComboBox.getSelectedItem();
                 JOptionPane.showMessageDialog(GIJoeCollectionGUI.this, year);
+
             }
         });
     }
@@ -61,7 +62,9 @@ public class GIJoeCollectionGUI extends JFrame {
         //todo put name in after retrieving from database//
     private void configureNames(ArrayList namesFromYear) {
            for (int y = 0; y < namesFromYear.size(); y++) {
-               nameComboBox.addItem(y);
+
+               //String namesFromYearName = namesFromYear(y);
+               nameComboBox.addItem(namesFromYear.get(y));
            }
         }
 
@@ -72,17 +75,17 @@ public class GIJoeCollectionGUI extends JFrame {
         //YEAR submit button//
         yearSubmitButton.addActionListener(new ActionListener() {
 
-            public void actionPerformed(ActionEvent e) {
-                for (int x = 1982; x <= 1994; x++) {
-                    yearComboBox.addItem(x);
-                    String yearSelected = String.valueOf(yearComboBox.getSelectedItem());
-                    ArrayList names = null;
-                    try {
-                        names = mainDatabase.requestNamesForYear(yearSelected);
-                    } catch (SQLException e1) {
-                        e1.printStackTrace();
-                    }
-                    configureNames(names);
+                        public void actionPerformed(ActionEvent e) {
+                            for (int x = 1982; x <= 1994; x++) {
+                                yearComboBox.addItem(x);
+                                String yearSelected = String.valueOf(yearComboBox.getSelectedItem());
+                                ArrayList names = null;
+                                try {
+                                    names = mainDatabase.requestNamesForYear(yearSelected);
+                                } catch (SQLException e1) {
+                                    e1.printStackTrace();
+                                }
+                                configureNames(names);
 
                 }
 
