@@ -130,9 +130,10 @@ public class Main {
     public ArrayList<String> requestNamesForYear(String year) throws SQLException {
         System.out.println(year + "year!!!!");
         System.out.println("going to make ArrayList");
-
+        String yearcheck = "'" + year + "'";
         Statement statement = conn.createStatement();
-        String sql = "SELECT name FROM GIJoeDB WHERE year = 1983";     //set this to 1983 to make sure I was using valid commands
+        //String sql = "SELECT name FROM GIJoeDB WHERE year = \"'\" + year + \"'\"";     //set this to 1983 to make sure I was using valid commands
+        String sql = "SELECT name FROM GIJoeDB WHERE year =  "+ year +"";
         ResultSet rs = statement.executeQuery(sql);
         ArrayList<String> namesList = new ArrayList<>();
 

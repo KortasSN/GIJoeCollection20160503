@@ -76,8 +76,8 @@ public class GIJoeCollectionGUI extends JFrame {
         yearSubmitButton.addActionListener(new ActionListener() {
 
                         public void actionPerformed(ActionEvent e) {
-                            for (int x = 1982; x <= 1994; x++) {
-                                yearComboBox.addItem(x);
+//                            for (int x = 1982; x <= 1994; x++) {
+//                                yearComboBox.addItem(x);
                                 String yearSelected = String.valueOf(yearComboBox.getSelectedItem());
                                 ArrayList names = null;
                                 try {
@@ -86,13 +86,9 @@ public class GIJoeCollectionGUI extends JFrame {
                                     e1.printStackTrace();
                                 }
                                 configureNames(names);
-
                 }
-
-
                 //sent to configure names for names combobox
-
-                            }
+//                            }
             });
 
 
