@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by kortasthekiller on 4/22/16.
@@ -96,10 +97,19 @@ public class GIJoeCollectionGUI extends JFrame {
         nameSubmitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             String nameChosen = (String)nameComboBox.getSelectedItem();
+                HashMap<String, Boolean> accessories = null;
+                try {
+                    accessories = mainDatabase.requestAccessoriesForName(nameChosen);
+                } catch (SQLException e2) {
+                    e2.printStackTrace();
+                }
 
+              //  accessoriesSelected();
             }
         });
 
 
     }
+
+
 }

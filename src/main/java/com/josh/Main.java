@@ -5,11 +5,13 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import sun.util.resources.cldr.zh.CalendarData_zh_Hans_HK;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 public class Main {
@@ -17,7 +19,8 @@ public class Main {
     private Connection conn;
     private Statement setUpTableStatement;
     //static HSSFRow row;
-
+    static String year = "";
+    static String name = "";
     public static void main(String[] args) throws IOException {
 
 
@@ -100,10 +103,8 @@ public class Main {
                 String sqlInput = "INSERT INTO GIJoeDB(year, name, acc1, acc2, acc3, acc4, acc5, acc6, acc7, acc8, acc9, acc10) VALUE ('" + year + "', '" + name + "', '" + acc1 + "','" + acc2 + "','" + acc3 + "','" + acc4 + "','" + acc5 + "','" + acc6 + "','" + acc7 + "','" + acc8 + "','" + acc9 + "','" + acc10 + "')";
 //    NOT USING            String sqlInput = "INSERT INTO GIJoeDB VALUES('" + year + "', '" + name + "', '" + acc1 + "','" + acc2 + "','" + acc3 + "','"
 //                        + acc4 + "','" + acc5 + "','" + acc6 + "','" + acc7 + "','" + acc8 + "','" + acc9 + "','" + acc10 + "')";
-
                // PreparedStatement prepstat = conn.prepareStatement(sqlInput2ndAttempt);
                // prepstat.setString(name);
-
                 //importDB = conn.prepareStatement(sqlInput);
                 System.out.println(sqlInput);
                 System.out.println(importDB + "another attempt at data");
@@ -121,44 +122,45 @@ public class Main {
             e.printStackTrace();
         }
 
-
         GIJoeCollectionGUI gui = new GIJoeCollectionGUI(this);
-
 
     }
 
     public ArrayList<String> requestNamesForYear(String year) throws SQLException {
         System.out.println(year + "year!!!!");
         System.out.println("going to make ArrayList");
-        String yearcheck = "'" + year + "'";
+        //String yearcheck = "'" + year + "'";
         Statement statement = conn.createStatement();
         //String sql = "SELECT name FROM GIJoeDB WHERE year = \"'\" + year + \"'\"";     //set this to 1983 to make sure I was using valid commands
         String sql = "SELECT name FROM GIJoeDB WHERE year =  "+ year +"";
         ResultSet rs = statement.executeQuery(sql);
         ArrayList<String> namesList = new ArrayList<>();
 
-
         while (rs.next())
         {
             String nameToAdd = rs.getString("name");
             System.out.println(nameToAdd + "name to add");
             namesList.add(nameToAdd);
-
 //            namesList.add(name);
-//
         }
-
-        //System.out.println(namesList);
-
-
-        //sQLGetNamesByYear.
         //todo take arraylist and enter into
-
         //todo database - make query, send results back
         //return requestNamesForYear(sQLGetNamesByYear); //todo This is causing your endless loop - keep calling this method again?
-
         return namesList;
     }
+    public HashMap<String, Boolean> requestAccessoriesForName(String accessories) throws SQLException {
+        System.out.println(accessories + "Accessories!!!");
+        Statement statement = conn.createStatement();
+        String acc1 = "SELECT acc1 FROM GIJoeDB WHERE (year = "+ year + " AND name = "+ name + ")";
+        System.out.println(acc1.toString() + "acc1 attempt");
+        ResultSet rs = statement.executeQuery(acc1);
+        HashMap<String, Boolean> accHash = new HashMap<>();
+        //String sqlAccessories = "SELECT acc1, acc2, acc3, acc4,  FROM GIJoeDB WHERE acc1 = "+ accessories +"";
+        return accHash;
+    }
+
+
+
 
     public void shutdown() {
         //todo close connection, statements.
