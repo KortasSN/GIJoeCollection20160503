@@ -128,42 +128,33 @@ public class Main {
     }
 
     public ArrayList<String> requestNamesForYear(String year) throws SQLException {
+        System.out.println(year + "year!!!!");
         System.out.println("going to make ArrayList");
 
-        String sQLGetNamesByYear = "SELECT name FROM GIJoeDB WHERE year = ?";
-        //System.out.println(sQLGetNamesByYear);
-        //PreparedStatement preparedStatement = Connection.class.sQLGetNamesByYear);
-        String sql = "select * from gijoedb";
-        //Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/GIJoeDB", "root", "CobraCommandCenter668");
+        Statement statement = conn.createStatement();
+        String sql = "SELECT name FROM GIJoeDB WHERE year = 1983";     //set this to 1983 to make sure I was using valid commands
+        ResultSet rs = statement.executeQuery(sql);
+        ArrayList<String> namesList = new ArrayList<>();
 
-        PreparedStatement statementNames = conn.prepareStatement(sQLGetNamesByYear);
 
-        System.out.println(sQLGetNamesByYear.toString());
+        while (rs.next())
+        {
+            String nameToAdd = rs.getString("name");
+            System.out.println(nameToAdd + "name to add");
+            namesList.add(nameToAdd);
 
-        statementNames.setString(1, year);
-        ResultSet result = statementNames.executeQuery(sql);
-        System.out.println(result + "result");
+//            namesList.add(name);
+//
+        }
 
-//        Statement stmt = connection.createStatement();
-//        ResultSet resultSet = statement.executeQuery("SELECT name FROM GIJoeDB Where year = '"+year+"'");
+        System.out.println(namesList);
 
-        //need an execute statement to actually get data from GIJoeDB//
-        //        requestNamesForYear(sQLGetNamesByYear);   //puts into arraylist
-        //System.out.println(requestNamesForYear(sQLGetNamesByYear));  //output for testing
+
         //sQLGetNamesByYear.
         //todo take arraylist and enter into
 
         //todo database - make query, send results back
         //return requestNamesForYear(sQLGetNamesByYear); //todo This is causing your endless loop - keep calling this method again?
-
-        ArrayList<String> namesList = new ArrayList<>();
-
-
-        while (result.next()) {
-            String name = result.getString("name");      //take result from name in GIJoeDB and set to name
-            namesList.add(name);                         //add name pulled from GIJoeDB and add to namesList ArrayList
-            System.out.println("Added this name: " + name);        //output the name added
-        }
 
         return namesList;
     }
