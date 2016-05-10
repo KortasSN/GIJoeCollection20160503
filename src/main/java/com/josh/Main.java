@@ -147,7 +147,7 @@ public class Main {
 //
         }
 
-        System.out.println(namesList);
+        //System.out.println(namesList);
 
 
         //sQLGetNamesByYear.
