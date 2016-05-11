@@ -93,12 +93,7 @@ public class Main {
                 Cell acc10 = sheet.getRow(r).getCell(c + 11, Row.RETURN_BLANK_AS_NULL);
                 System.out.println(acc10);
 
-                //String sqlInput2ndAttempt = "INSERT INTO GIJoeDB VALUES (year, name, acc1, acc2, acc3, acc4, acc5, acc6, acc7, acc8, acc9, acc10)";
-               // String sqlInput2ndAttempt = "INSERT INTO GIJoeDB (year, name, acc1, acc2, acc3, acc4, acc5, acc6, acc7, acc8, acc9, acc10)" + " VALUES ('year', ?, ?, ?, ?,
 
-               // System.out.println(sqlInput2ndAttempt + "here is the data");
-                //String sqlInput = "INSERT INTO GIJoeDB (year, name, acc1, acc2, acc3, acc4, acc5, acc6, acc7, acc8, acc9, acc10) VALUES ('" + year + "', '" + name + "', '" + acc1 + "','" + acc2 + "','" + acc3 + "','"
-             //          + acc4 + "','" + acc5 + "','" + acc6 + "','" + acc7 + "','" + acc8 + "','" + acc9 + "','" + acc10 + "', )";
 
                 String sqlInput = "INSERT INTO GIJoeDB(year, name, acc1, acc2, acc3, acc4, acc5, acc6, acc7, acc8, acc9, acc10) VALUE ('" + year + "', '" + name + "', '" + acc1 + "','" + acc2 + "','" + acc3 + "','" + acc4 + "','" + acc5 + "','" + acc6 + "','" + acc7 + "','" + acc8 + "','" + acc9 + "','" + acc10 + "')";
 //    NOT USING            String sqlInput = "INSERT INTO GIJoeDB VALUES('" + year + "', '" + name + "', '" + acc1 + "','" + acc2 + "','" + acc3 + "','"
@@ -148,14 +143,48 @@ public class Main {
         //return requestNamesForYear(sQLGetNamesByYear); //todo This is causing your endless loop - keep calling this method again?
         return namesList;
     }
-    public HashMap<String, Boolean> requestAccessoriesForName(String accessories) throws SQLException {
-        System.out.println(accessories + "Accessories!!!");
+    public HashMap<String, Boolean> requestAccessoriesForName(String nameChosen, String year) throws SQLException {
+        System.out.println(nameChosen + "Accessories!!!");
         Statement statement = conn.createStatement();
-        String acc1 = "SELECT acc1 FROM GIJoeDB WHERE (year = "+ year + " AND name = "+ name + ")";
+        String acc1 = "SELECT acc1, acc2, acc3, acc4, acc5, acc6, acc7, acc8, acc9, acc10 FROM GIJoeDB WHERE (year = " + year + " AND name = '" + nameChosen + "')";
+
         System.out.println(acc1.toString() + "acc1 attempt");
         ResultSet rs = statement.executeQuery(acc1);
-        HashMap<String, Boolean> accHash = new HashMap<>();
-        //String sqlAccessories = "SELECT acc1, acc2, acc3, acc4,  FROM GIJoeDB WHERE acc1 = "+ accessories +"";
+        //HashMap<String, Boolean> accHash = new HashMap<>();
+        ResultSetMetaData meta = rs.getMetaData();
+        //HashMap<String, Boolean> accHash = null;
+        HashMap<String, Boolean> accHash = new HashMap();
+        int columnsNumber = meta.getColumnCount();
+        while (rs.next()) {
+
+            for (int x = 1; x <=columnsNumber; x++) {
+                //if (x > 1) System.out.println(", ");
+                String columnValue = rs.getString(x);
+                System.out.println(columnValue + " " + meta.getColumnName(x));
+                //accHash = new HashMap<>();
+
+                //String key = meta.getColumnName(x);
+                boolean value = false;
+                accHash.put(columnValue, value);
+            }
+        }
+        ;
+//        while (rs.next()) {
+//            accHash = new HashMap<>();
+//            for (int x = 1; x <= meta.getColumnCount(); x++) {
+//                String key = meta.getColumnName(x);
+//                boolean value = false;
+//                accHash.put(key, value);
+//            }
+//        }
+        //TESTING output of hashMap
+        Iterator iterator = accHash.keySet().iterator();
+            while (iterator.hasNext()) {
+                String key = iterator.next().toString();
+                boolean value = accHash.get(key);
+                System.out.println(key + " " + value);
+            }
+        System.out.println(accHash);
         return accHash;
     }
 

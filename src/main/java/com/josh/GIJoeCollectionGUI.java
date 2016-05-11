@@ -39,7 +39,6 @@ public class GIJoeCollectionGUI extends JFrame {
         setVisible(true);
         buttonConfig();
 
-
     }
     //make change for git
     private void configureButton() {
@@ -69,8 +68,6 @@ public class GIJoeCollectionGUI extends JFrame {
            }
         }
 
-
-
     public void buttonConfig() {
 
         //YEAR submit button//
@@ -97,9 +94,11 @@ public class GIJoeCollectionGUI extends JFrame {
         nameSubmitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             String nameChosen = (String)nameComboBox.getSelectedItem();
+            String yearSelected = (String)yearComboBox.getSelectedItem();
                 HashMap<String, Boolean> accessories = null;
                 try {
-                    accessories = mainDatabase.requestAccessoriesForName(nameChosen);
+                    //accessories =
+                            mainDatabase.requestAccessoriesForName(nameChosen, yearSelected);
                 } catch (SQLException e2) {
                     e2.printStackTrace();
                 }
