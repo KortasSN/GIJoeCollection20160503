@@ -168,15 +168,7 @@ public class Main {
                 accHash.put(columnValue, value);
             }
         }
-        ;
-//        while (rs.next()) {
-//            accHash = new HashMap<>();
-//            for (int x = 1; x <= meta.getColumnCount(); x++) {
-//                String key = meta.getColumnName(x);
-//                boolean value = false;
-//                accHash.put(key, value);
-//            }
-//        }
+
         //TESTING output of hashMap
         Iterator iterator = accHash.keySet().iterator();
             while (iterator.hasNext()) {
@@ -187,6 +179,8 @@ public class Main {
         System.out.println(accHash);
         return accHash;
     }
+
+
 
 
 
