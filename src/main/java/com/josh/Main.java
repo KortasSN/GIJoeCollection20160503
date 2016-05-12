@@ -33,7 +33,7 @@ public class Main {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/GIJoeDB", "root", "itecitec");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/GIJoeDB", "root", "CobraCommandCenter668");
 
             setUpTableStatement = conn.createStatement();
             String deleteSqlInfo = "DROP TABLE if EXISTS GIJoeDB";
