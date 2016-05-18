@@ -33,7 +33,7 @@ public class Main {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/GIJoeDB", "root", "CobraCommandCenter668");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/GIJoeDB", "root", "itecitec");
 
             setUpTableStatement = conn.createStatement();
             String deleteSqlInfo = "DROP TABLE if EXISTS GIJoeDB";
@@ -45,6 +45,10 @@ public class Main {
             //PRINTING OUT DATABASE WHEN TESTING  //
               //    System.out.println(createTableSQL);
             setUpTableStatement.execute(createTableSQL);
+
+
+
+
             PreparedStatement importDB = null;
             FileInputStream readStream = null;
             try {
@@ -60,8 +64,12 @@ public class Main {
             HSSFSheet sheet = workbook.getSheetAt(0);
 
 
+
+
+
+
             for (int r = 0; r < sheet.getLastRowNum(); r++) {
-                System.out.println(sheet.getRow(r));        //output of row information
+              //  System.out.println(sheet.getRow(r));        //output of row information
                 HSSFRow row = sheet.getRow(r);
                 //while (row.getCell(c).getStringCellValue() != null) {
                 int c = 0;
@@ -69,29 +77,29 @@ public class Main {
                 System.out.println(row.getLastCellNum());    //output last cell number
 
                 Cell year = sheet.getRow(r).getCell(c);//, Row.RETURN_BLANK_AS_NULL);
-                System.out.println(year);
+                //System.out.println(year);
                 Cell name = sheet.getRow(r).getCell(c + 1, Row.RETURN_BLANK_AS_NULL);
-                System.out.println(name + " name");
+                //System.out.println(name + " name");
                 Cell acc1 = sheet.getRow(r).getCell(c + 2, Row.RETURN_BLANK_AS_NULL);
-                System.out.println(acc1);
+                //System.out.println(acc1);
                 Cell acc2 = sheet.getRow(r).getCell(c + 3, Row.RETURN_BLANK_AS_NULL);
-                System.out.println(acc2);
+                //System.out.println(acc2);
                 Cell acc3 = sheet.getRow(r).getCell(c + 4, Row.RETURN_BLANK_AS_NULL);
-                System.out.println(acc3);
+                //System.out.println(acc3);
                 Cell acc4 = sheet.getRow(r).getCell(c + 5, Row.RETURN_BLANK_AS_NULL);
-                System.out.println(acc4);
+                //System.out.println(acc4);
                 Cell acc5 = sheet.getRow(r).getCell(c + 6, Row.RETURN_BLANK_AS_NULL);
-                System.out.println(acc5);
+                //System.out.println(acc5);
                 Cell acc6 = sheet.getRow(r).getCell(c + 7, Row.RETURN_BLANK_AS_NULL);
-                System.out.println(acc6);
+                //System.out.println(acc6);
                 Cell acc7 = sheet.getRow(r).getCell(c + 8, Row.RETURN_BLANK_AS_NULL);
-                System.out.println(acc7);
+                //System.out.println(acc7);
                 Cell acc8 = sheet.getRow(r).getCell(c + 9, Row.RETURN_BLANK_AS_NULL);
-                System.out.println(acc8);
+                //System.out.println(acc8);
                 Cell acc9 = sheet.getRow(r).getCell(c + 10, Row.RETURN_BLANK_AS_NULL);
-                System.out.println(acc9);
+                //System.out.println(acc9);
                 Cell acc10 = sheet.getRow(r).getCell(c + 11, Row.RETURN_BLANK_AS_NULL);
-                System.out.println(acc10);
+                //System.out.println(acc10);
 
 
 
@@ -101,8 +109,8 @@ public class Main {
                // PreparedStatement prepstat = conn.prepareStatement(sqlInput2ndAttempt);
                // prepstat.setString(name);
                 //importDB = conn.prepareStatement(sqlInput);
-                System.out.println(sqlInput);
-                System.out.println(importDB + "another attempt at data");
+            //    System.out.println(sqlInput);
+                //System.out.println(importDB + "another attempt at data");
                 Statement statement = conn.createStatement();
                 statement.executeUpdate(sqlInput);
                 //statement.executeUpdate("INSERT INTO GIJoeDB(year, name, acc1, acc2, acc3, acc4, acc5, acc6, acc7, acc8, acc9, acc10) VALUE ('" + year + "', '" + name + "', '" + acc1 + "','" + acc2 + "','" + acc3 + "','" + acc4 + "','" + acc5 + "','" + acc6 + "','" + acc7 + "','" + acc8 + "','" + acc9 + "','" + acc10 + "')");
@@ -118,6 +126,7 @@ public class Main {
         }
 
         GIJoeCollectionGUI gui = new GIJoeCollectionGUI(this);
+
 
     }
 
@@ -157,7 +166,8 @@ public class Main {
         int columnsNumber = meta.getColumnCount();
         while (rs.next()) {
 
-            for (int x = 1; x <=columnsNumber; x++) {
+            /*for (int x = 1; x <=columnsNumber; x++) {*/
+            for (int x = 1; x <= columnsNumber; x++) {
                 //if (x > 1) System.out.println(", ");
                 String columnValue = rs.getString(x);
                 System.out.println(columnValue + " " + meta.getColumnName(x));
@@ -165,7 +175,13 @@ public class Main {
 
                 //String key = meta.getColumnName(x);
                 boolean value = false;
-                accHash.put(columnValue, value);
+                System.out.println(columnValue);
+                if (!columnValue.equals("null")) {
+                    accHash.put(columnValue, value);
+                }
+//                if (columnValue.equals("null")) {
+//                    System.out.println("columnValue equals null");
+//                }
             }
         }
 
@@ -179,10 +195,6 @@ public class Main {
         System.out.println(accHash);
         return accHash;
     }
-
-
-
-
 
 
     public void shutdown() {

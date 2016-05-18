@@ -1,5 +1,6 @@
 package com.josh;
 
+import com.intellij.vcs.log.Hash;
 import com.sun.beans.decoder.ValueObject;
 import org.omg.CORBA.portable.ValueOutputStream;
 
@@ -34,6 +35,7 @@ public class GIJoeCollectionGUI extends JFrame {
     private JCheckBox acc9CheckBox;
     private JCheckBox acc10CheckBox;
     private JButton submitChangesButton;
+    private JTable table1;
     private Main mainDatabase;
     private boolean hasAcc1;
     private boolean hasAcc2;
@@ -54,10 +56,12 @@ public class GIJoeCollectionGUI extends JFrame {
         this.setContentPane(rootPanel);
         configureYear();
         configureButton();
-
+        setLocationRelativeTo(null);
+        setResizable(true);
         pack();
         setVisible(true);
         buttonConfig();
+
         //accConfig(accHash);
 
 
@@ -120,7 +124,9 @@ public class GIJoeCollectionGUI extends JFrame {
                                                public void actionPerformed(ActionEvent e) {
                                                    String nameChosen = (String) nameComboBox.getSelectedItem();
                                                    String yearSelected = (String) yearComboBox.getSelectedItem();
-                                                   HashMap<String, Boolean> accessories = null;
+                                                   /*HashMap<String, Boolean> accessories = null;*/
+                                                   HashMap<String, Boolean> accessories;
+                                                   //HashMap testHash = null;
                                                    HashMap testHash = null;
                                                    try {
                                                        //accessories =
@@ -131,11 +137,12 @@ public class GIJoeCollectionGUI extends JFrame {
 
                                                    //setting the accessories text information//
 
-                                                   System.out.println(testHash);
+                                                   //System.out.println(testHash);
 
 
                                                    Iterator iterator = testHash.keySet().iterator();
                                                    int y = testHash.size();
+                                                   System.out.println("int y = testHash.size() = " + y);
                                                    int z = 0;
                                                    //while (iterator.hasNext()) {
                                                    //String key1 = testHash.get()
